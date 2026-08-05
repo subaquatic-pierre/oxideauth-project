@@ -2,8 +2,8 @@
 resolver = "2"
 
 members = [
-    "oxideauth",
-    "oxideauth-macros",
+    "api",
+    "macros",
 ]
 
 [profile.release]
