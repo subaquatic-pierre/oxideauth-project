@@ -8,3 +8,6 @@ test-results
 data/
 
 .venv
+references
+*/**/.specify/
+*/**/.opencode/
