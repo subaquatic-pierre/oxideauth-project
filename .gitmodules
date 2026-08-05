@@ -4,3 +4,6 @@
 [submodule "oxideauth"]
 	path = oxideauth
 	url = git@github.com:subaquatic-pierre/oxideauth-api.git
+[submodule "dashboard"]
+	path = dashboard
+	url = git@github.com:subaquatic-pierre/oxideauth-dashboard.git
