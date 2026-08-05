@@ -1,21 +1,24 @@
 services:
-  # oxideauth:
-  #   container_name: oxideauth-api
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile.dev
-  #   env_file: ./oxideauth/.env.dev
-  #   user: "1000:1000"
-  #   ports:
-  #     - "8000:8000"
-  #   volumes:
-  #     - ./oxideauth:/app/oxideauth
-  #     - ./oxideauth-macros:/app/oxideauth-macros
-  #   depends_on:
-  #     - postgres
-  #     - redis
-  #   networks:
-  #     - oxideauth_net # Use the explicit network name defined below
+  oxideauth:
+    container_name: oxideauth-api
+    build:
+      context: .
+      dockerfile: ./api/Dockerfile.dev
+    env_file: ./api/.env.dev
+    ports:
+      - "8000:8000"
+    volumes:
+      - ${HOST_PROJECT_DIR}/api:/app/api
+      - ${HOST_PROJECT_DIR}/macros:/app/macros
+      # Mount cargo registry cache to speed up rebuilds
+      - cargo-cache:/usr/local/cargo/registry
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    networks:
+      - oxideauth_net
 
   postgres:
     container_name: oxideauth-postgres
@@ -31,6 +34,11 @@ services:
     volumes:
       - ./data/psql:/var/lib/postgresql/data/pgdata
     restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U test_user -d dev_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
     networks:
       - oxideauth_net
 
@@ -48,5 +56,9 @@ services:
 
 # Define the networks section
 networks:
-  oxideauth_net: # The corrected network definition name
+  oxideauth_net:
     driver: bridge
+
+# Named volumes
+volumes:
+  cargo-cache:
