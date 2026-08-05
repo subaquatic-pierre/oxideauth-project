@@ -1,0 +1,6 @@
+[submodule "oxideauth-macros"]
+	path = oxideauth-macros
+	url = git@github.com:subaquatic-pierre/ironstone-macros.git
+[submodule "oxideauth"]
+	path = oxideauth
+	url = git@github.com:subaquatic-pierre/oxideauth-api.git

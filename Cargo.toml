@@ -1,0 +1,12 @@
+[workspace]
+resolver = "2"
+
+members = [
+    "oxideauth",
+    "oxideauth-macros",
+]
+
+[profile.release]
+lto = true
+codegen-units = 1
+strip = true
