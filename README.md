@@ -10,24 +10,17 @@ oxideauth-project/
   oxideauth-macros/      Procedural macros
   dashboard/             Admin dashboard (web UI)
   docs/                  Architecture & design docs
-  docker-compose.yaml    Infrastructure (Postgres, Redis)
-  Dockerfile.dev         Dev container with hot-reload
+  docker-compose.yaml    Orchestrates all services (Postgres, Redis, API, dashboard)
 ```
 
 ## Quick Start
 
 ```sh
-# 1. Start infrastructure
+# Start everything with Docker Compose
 docker-compose up -d
 
-# 2. Run migrations
-cd oxideauth && cargo db-dev-run
-
-# 3. Start API (with hot-reload)
-make dev
-# or: cargo watch -x "run --bin oxideauth"
-
-# 4. Start dashboard
+# Or run services individually:
+cd oxideauth && cargo db-dev-run && cargo run --bin oxideauth
 cd dashboard && npm run dev
 ```
 
