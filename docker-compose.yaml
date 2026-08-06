@@ -8,8 +8,8 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ${HOST_PROJECT_DIR}/api:/app/api
-      - ${HOST_PROJECT_DIR}/macros:/app/macros
+      - ${HOST_PROJECT_DIR:-.}/api:/app/api
+      - ${HOST_PROJECT_DIR:-.}/macros:/app/macros
       # Mount cargo registry cache to speed up rebuilds
       - cargo-cache:/usr/local/cargo/registry
     depends_on:
