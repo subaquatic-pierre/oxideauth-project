@@ -54,6 +54,18 @@ services:
     networks:
       - oxideauth_net
 
+  docs:
+    container_name: oxideauth-docs
+    build:
+      context: ./docs
+      dockerfile: Dockerfile
+    ports:
+      - "8001:8000"
+    volumes:
+      - ./docs:/docs
+    networks:
+      - oxideauth_net
+
 # Define the networks section
 networks:
   oxideauth_net:
