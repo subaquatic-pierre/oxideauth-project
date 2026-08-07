@@ -58,3 +58,4 @@ mkdocs build                      # static site → site/
 | **API Reference** | 39 endpoints across 9 resources — Health, Workspaces, Accounts, Projects, Roles, Permissions, Memberships, Credentials, Tokens |
 | **Concepts** | Multi-tenancy & workspaces, RBAC & permissions, membership model |
 | **Architecture** | Design docs — request flow, entities, auth flow, login flow, token architecture, service factory, store module, SQLx vs Diesel, embedded worker, and more |
+| **CI/CD** | Deployment pipelines with Git tags and manual scripts for each sub-module (API, docs, dashboard, macros) |
