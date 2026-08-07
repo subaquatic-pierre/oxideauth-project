@@ -10,6 +10,7 @@ oxideauth-project/
   oxideauth-macros/      Procedural macros
   dashboard/             Admin dashboard (web UI)
   docs/                  MkDocs site — API reference, concepts, architecture
+  scripts/               Deployment & CI orchestration tools
   docker-compose.yaml    Orchestrates all services (Postgres, Redis, API, dashboard)
 ```
 
@@ -58,4 +59,52 @@ mkdocs build                      # static site → site/
 | **API Reference** | 39 endpoints across 9 resources — Health, Workspaces, Accounts, Projects, Roles, Permissions, Memberships, Credentials, Tokens |
 | **Concepts** | Multi-tenancy & workspaces, RBAC & permissions, membership model |
 | **Architecture** | Design docs — request flow, entities, auth flow, login flow, token architecture, service factory, store module, SQLx vs Diesel, embedded worker, and more |
-| **CI/CD** | Deployment pipelines with Git tags and manual scripts for each sub-module (API, docs, dashboard, macros) |
+
+## CI/CD & Deployment
+
+Each sub-module has an independent deployment pipeline with two methods:
+
+| Method | Trigger | Description |
+|--------|---------|-------------|
+| **Git Tag Push** | Push `*.*.*` tag to sub-module remote | GitHub Actions workflow builds and deploys automatically |
+| **Manual Script** | `make deploy [patch\|minor\|major]` from sub-module | Script bumps version, builds, tags, and pushes locally |
+
+### Per Sub-Module Deployment
+
+| Sub-Module | Deploy Type | Commands | Deployment Target |
+|------------|-------------|----------|-------------------|
+| `api/` | Build-only verification | `make deploy patch` from `api/` | None (verification only) |
+| `docs/` | Static site | `make deploy patch` from `docs/` | GitHub Pages |
+| `dashboard/` | Static site (placeholder) | `make deploy patch` from `dashboard/` | GitHub Pages |
+| `macros/` | Crate publish | `make deploy patch` from `macros/` | crates.io |
+
+### Unified Deploy (All Sub-Modules)
+
+```sh
+# From the project root, deploy all sub-modules with a single command:
+make deploy-all patch    # bump all sub-modules by patch
+make deploy-all minor    # bump all sub-modules by minor
+make deploy-all major    # bump all sub-modules by major
+
+# Preview what would happen without executing:
+./scripts/deploy-all.sh --dry-run patch
+```
+
+### Commit Across Sub-Modules
+
+```sh
+# Stage, commit, and push all sub-modules first, then root:
+./scripts/commit-all.sh "Update all sub-modules"
+# or:
+make commit-all "Update all sub-modules"
+```
+
+### Tag Convention
+
+All deployments use **semantic versioning** (e.g., `1.2.3`). Tags are created on the `main` branch. Each sub-module maintains its own independent version history.
+
+See individual sub-module READMEs for detailed deployment instructions:
+- [API Deployment](api/README.md#deployment)
+- [Docs Deployment](docs/README.md#deploying-to-github-pages)
+- [Dashboard Deployment](dashboard/README.md#deployment)
+- [Macros Deployment](macros/README.md#deployment)
