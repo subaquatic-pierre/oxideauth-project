@@ -23,8 +23,8 @@ docker compose up -d
 
 | Service | URL |
 |---------|-----|
-| API | http://localhost:8000 |
-| Docs | http://localhost:8001 |
+| API | http://localhost:6000 |
+| Docs | http://localhost:7000 |
 | Postgres | localhost:5432 |
 | Redis | localhost:6379 |
 
@@ -32,7 +32,7 @@ docker compose up -d
 # Or run services individually:
 cd oxideauth && cargo db-dev-run && cargo run --bin oxideauth
 cd dashboard && npm run dev
-cd docs && make serve   # docs at http://localhost:8000
+cd docs && make serve   # docs at http://localhost:7000
 ```
 
 ## API
@@ -46,7 +46,7 @@ Built with [MkDocs](https://www.mkdocs.org/) + [Material for MkDocs](https://squ
 ```sh
 cd docs
 pip install -r requirements.txt   # mkdocs, mkdocs-material, plugins
-mkdocs serve                      # live-reload at http://127.0.0.1:8000
+mkdocs serve                      # live-reload at http://127.0.0.1:7000
 mkdocs build                      # static site → site/
 ```
 
