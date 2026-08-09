@@ -6,8 +6,8 @@ Multi-tenant Identity and Access Management (IAM) platform — OIDC authenticati
 
 ```
 oxideauth-project/
-  oxideauth/             API (Rust / Axum / SQLx)
-  oxideauth-macros/      Procedural macros
+  api/                   API (Rust / Axum / SQLx)
+  macros/                Procedural macros
   dashboard/             Admin dashboard (web UI)
   docs/                  MkDocs site — API reference, concepts, architecture
   scripts/               Deployment & CI orchestration tools
@@ -31,14 +31,14 @@ docker compose up -d
 
 ```sh
 # Or run services individually:
-cd oxideauth && cargo db-dev-run && cargo run --bin oxideauth
+cd api && cargo db-dev-run && cargo run --bin oxideauth
 cd dashboard && npm run dev
 cd docs && make serve   # docs at http://localhost:7000
 ```
 
 ## API
 
-See [oxideauth/README.md](oxideauth/README.md) for API-specific documentation.
+See [api/README.md](api/README.md) for API-specific documentation.
 
 ## Documentation
 
@@ -46,9 +46,10 @@ Built with [MkDocs](https://www.mkdocs.org/) + [Material for MkDocs](https://squ
 
 ```sh
 cd docs
-pip install -r requirements.txt   # mkdocs, mkdocs-material, plugins
-mkdocs serve                      # live-reload at http://127.0.0.1:7000
-mkdocs build                      # static site → site/
+source .venv/bin/activate        # or use docs/.venv/bin/python3 directly
+pip install -r requirements.txt  # mkdocs, mkdocs-material, plugins
+mkdocs serve                     # live-reload at http://127.0.0.1:7000
+mkdocs build --strict            # static site → site/
 ```
 
 ### Sections
@@ -57,7 +58,7 @@ mkdocs build                      # static site → site/
 | ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Home**            | Architecture overview with Mermaid diagrams                                                                                                               |
 | **Getting Started** | Setup guide, first API calls, recommended workflow                                                                                                        |
-| **API Reference**   | 39 endpoints across 9 resources — Health, Workspaces, Accounts, Projects, Roles, Permissions, Memberships, Credentials, Tokens                            |
+| **API Reference**   | 50 endpoints across 11 resources — Health, Auth, Clients, Workspaces, Accounts, Projects, Roles, Permissions, Memberships, Credentials, Validate                 |
 | **Concepts**        | Multi-tenancy & workspaces, RBAC & permissions, membership model                                                                                          |
 | **Architecture**    | Design docs — request flow, entities, auth flow, login flow, token architecture, service factory, store module, SQLx vs Diesel, embedded worker, and more |
 
