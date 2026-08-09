@@ -21,12 +21,13 @@ oxideauth-project/
 docker compose up -d
 ```
 
-| Service | URL |
-|---------|-----|
-| API | http://localhost:6000 |
-| Docs | http://localhost:7000 |
-| Postgres | localhost:5432 |
-| Redis | localhost:6379 |
+| Service   | URL                   |
+| --------- | --------------------- |
+| API       | http://localhost:8000 |
+| Docs      | http://localhost:7000 |
+| Dashboard | http://localhost:5000 |
+| Postgres  | localhost:5432        |
+| Redis     | localhost:6379        |
 
 ```sh
 # Or run services individually:
@@ -52,31 +53,31 @@ mkdocs build                      # static site → site/
 
 ### Sections
 
-| Section | Contents |
-|---------|----------|
-| **Home** | Architecture overview with Mermaid diagrams |
-| **Getting Started** | Setup guide, first API calls, recommended workflow |
-| **API Reference** | 39 endpoints across 9 resources — Health, Workspaces, Accounts, Projects, Roles, Permissions, Memberships, Credentials, Tokens |
-| **Concepts** | Multi-tenancy & workspaces, RBAC & permissions, membership model |
-| **Architecture** | Design docs — request flow, entities, auth flow, login flow, token architecture, service factory, store module, SQLx vs Diesel, embedded worker, and more |
+| Section             | Contents                                                                                                                                                  |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Home**            | Architecture overview with Mermaid diagrams                                                                                                               |
+| **Getting Started** | Setup guide, first API calls, recommended workflow                                                                                                        |
+| **API Reference**   | 39 endpoints across 9 resources — Health, Workspaces, Accounts, Projects, Roles, Permissions, Memberships, Credentials, Tokens                            |
+| **Concepts**        | Multi-tenancy & workspaces, RBAC & permissions, membership model                                                                                          |
+| **Architecture**    | Design docs — request flow, entities, auth flow, login flow, token architecture, service factory, store module, SQLx vs Diesel, embedded worker, and more |
 
 ## CI/CD & Deployment
 
 Each sub-module has an independent deployment pipeline with two methods:
 
-| Method | Trigger | Description |
-|--------|---------|-------------|
-| **Git Tag Push** | Push `*.*.*` tag to sub-module remote | GitHub Actions workflow builds and deploys automatically |
-| **Manual Script** | `make deploy [patch\|minor\|major]` from sub-module | Script bumps version, builds, tags, and pushes locally |
+| Method            | Trigger                                             | Description                                              |
+| ----------------- | --------------------------------------------------- | -------------------------------------------------------- |
+| **Git Tag Push**  | Push `*.*.*` tag to sub-module remote               | GitHub Actions workflow builds and deploys automatically |
+| **Manual Script** | `make deploy [patch\|minor\|major]` from sub-module | Script bumps version, builds, tags, and pushes locally   |
 
 ### Per Sub-Module Deployment
 
-| Sub-Module | Deploy Type | Commands | Deployment Target |
-|------------|-------------|----------|-------------------|
-| `api/` | Build-only verification | `make deploy patch` from `api/` | None (verification only) |
-| `docs/` | Static site | `make deploy patch` from `docs/` | GitHub Pages |
-| `dashboard/` | Static site (placeholder) | `make deploy patch` from `dashboard/` | GitHub Pages |
-| `macros/` | Crate publish | `make deploy patch` from `macros/` | crates.io |
+| Sub-Module   | Deploy Type               | Commands                              | Deployment Target        |
+| ------------ | ------------------------- | ------------------------------------- | ------------------------ |
+| `api/`       | Build-only verification   | `make deploy patch` from `api/`       | None (verification only) |
+| `docs/`      | Static site               | `make deploy patch` from `docs/`      | GitHub Pages             |
+| `dashboard/` | Static site (placeholder) | `make deploy patch` from `dashboard/` | GitHub Pages             |
+| `macros/`    | Crate publish             | `make deploy patch` from `macros/`    | crates.io                |
 
 ### Unified Deploy (All Sub-Modules)
 
@@ -104,6 +105,7 @@ make commit-all "Update all sub-modules"
 All deployments use **semantic versioning** (e.g., `1.2.3`). Tags are created on the `main` branch. Each sub-module maintains its own independent version history.
 
 See individual sub-module READMEs for detailed deployment instructions:
+
 - [API Deployment](api/README.md#deployment)
 - [Docs Deployment](docs/README.md#deploying-to-github-pages)
 - [Dashboard Deployment](dashboard/README.md#deployment)
