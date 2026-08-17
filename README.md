@@ -58,7 +58,7 @@ mkdocs build --strict            # static site → site/
 | ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Home**            | Architecture overview with Mermaid diagrams                                                                                                               |
 | **Getting Started** | Setup guide, first API calls, recommended workflow                                                                                                        |
-| **API Reference**   | 50 endpoints across 11 resources — Health, Auth, Clients, Workspaces, Accounts, Projects, Roles, Permissions, Memberships, Credentials, Validate                 |
+| **API Reference**   | 62 endpoints across 12 resources — Health, Auth, Workspaces, Accounts, Projects, Profiles, Clients, Roles, Permissions, Policies, Memberships, Credentials       |
 | **Concepts**        | Multi-tenancy & workspaces, RBAC & permissions, membership model                                                                                          |
 | **Architecture**    | Design docs — request flow, entities, auth flow, login flow, token architecture, service factory, store module, SQLx vs Diesel, embedded worker, and more |
 
